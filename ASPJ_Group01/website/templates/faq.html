@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Shop Now{% endblock %}
+
+{% block content %}
+
+<div class = "row">
+    <div class = "col flex-grow-0">
+        {% if current_user.is_authenticated and current_user.user_type == 'staff' %}
+        {% include 'includes/_sidebarStaff.html' %}
+        {%else%}
+        {% include 'includes/_sidebar.html' %}
+        {% endif %}
+    </div>
+    <div class = "col">
+        <h1 class = "text-white">Frequently Asked Questions</h1>
+        <hr style = "color: white;">
+        <div class = "row">
+            <div class="accordion" id = "accordionExample">
+                {% if faqs %}
+                {% for entry in faqs %}
+                <div class="accordion-item border border-0">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button bg-success text-white"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ entry.get_faq_id() }}"
+                            aria-expanded="true"
+                            aria-controls="collapseOne">
+                            {{ entry.get_question() }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ entry.get_faq_id() }}" class="bg-secondary accordion-collapse collapse"
+                         aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <div class="accordion-body text-white">
+                            <strong>{{ entry.get_answer() }}</strong>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="text-white">
+                    <h3 class="text-center font-weight-bold">No FAQs at the moment</h3>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

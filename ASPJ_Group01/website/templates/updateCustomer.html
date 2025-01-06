@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <form class="text-white" method="POST" action="{{ url_for('auth.update_user', id=user.id) }}" id="update-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <h3 align="center">Sign Up</h3>
+            <div id="update-section">
+                <div class="form-group mb-3">
+                    {{ render_field(form.fname, class="form-control", value=user.fname) }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ render_field(form.lname, class="form-control", value=user.lname) }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ render_field(form.email, class="form-control", value=user.email) }}
+                </div>
+                <div class="form-group mb-3">
+                    <div class="input-group">
+                        {{ render_field(form.password1, class="form-control", type="password") }}
+                        <span class="input-group-text">
+                            <i id="togglePassword1" class="fas fa-eye-slash" onclick="togglePasswordVisibility('password1', 'togglePassword1')"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="input-group">
+                        {{ render_field(form.password2, class="form-control", type="password") }}
+                        <span class="input-group-text">
+                            <i id="togglePassword2" class="fas fa-eye-slash" onclick="togglePasswordVisibility('password2', 'togglePassword2')"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id="otp-section" style="display: none;">
+                <div class="form-group mb-3">
+                    <label for="otp">Enter OTP sent to your email</label>
+                    <input type="text" class="form-control" id="otp" name="otp">
+                </div>
+            </div>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+
+<script>
+function togglePasswordVisibility(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    } else {
+        input.type = "password";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    }
+}
+
+document.getElementById('update-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var form = this;
+
+    // Perform initial update AJAX request
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{{ url_for("auth.update_user") }}', true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.status === 'success') {
+                // Hide initial form fields and show OTP field
+                document.getElementById('update-section').style.display = 'none';
+                document.getElementById('otp-section').style.display = 'block';
+                document.getElementById('submit-button').innerText = 'Verify OTP';
+            } else {
+                // Show error message
+                alert(response.message);
+            }
+        } else {
+            alert('An error occurred, please try again.');
+        }
+    };
+    xhr.send(formData);
+});
+</script>
+{% endblock %}
+
+

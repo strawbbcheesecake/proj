@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+<div class="row gx-8 text-white">
+    <div class = "col flex-grow-0">
+        {% if current_user.is_authenticated and current_user.user_type == 'staff' %}
+        {% include 'includes/_sidebarStaff.html' %}
+        {% else %}
+        {% include 'includes/_sidebar.html' %}
+        {% endif %}
+    </div>
+    <div class="col">
+        <img class = "w-100 rounded" src = "{{url_for('static', filename = '100%recycledFabric.png')}}">
+        <hr>
+        <h6>At GreenStyle, we aim to contribute to the fight against climate change and thus all of our products are 100% eco-friendly!<br>
+            All materials used in our goods are sourced sustainably and/or recycled and almost nothing is wasted.</h6>
+        <h3>That's right, that is how committed we are.</h3>
+        <hr style = "color: white;">
+        <div class="row gx-8 text-center">
+            <h3 class="mb-5">Promotions and Discounts</h3>
+            <div class = "col">
+                <h5>Shop smart, Save smarter!</h5>
+                <img class="img-fluid h-50 rounded" src="{{url_for('static', filename='pink.png')}}">
+                <p>Start shopping now and get a 15% discount on select items!</p>
+                <a href="/shopNow" class="">Bring Me There</a>
+            </div>
+            <div class = "col">
+                <h5>Early Bird Promotions</h5>
+                <img class="img-fluid h-50 rounded" src="{{url_for('static', filename='early-bird.jpg')}}">
+                <p>You're here early! Use code: EARLY for a 5% discount on ALL purchases!</p>
+                <a href="/shopNow" class="">Start Now</a>
+            </div>
+            <div class = "col">
+                <h5>GreenStyle Is Going Digital!</h5>
+                <img class="img-fluid h-50 rounded" src="{{url_for('static', filename='digital.jpg')}}">
+                <p>As part of our efforts to go digital, this platform brings us closer to you, for a better us all!</p>
+                <a href="/shopNow" class="">Start Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}My Cart{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col flex-grow-0">
+        {% if current_user.is_authenticated and current_user.user_type == 'staff' %}
+            {% include 'includes/_sidebarStaff.html' %}
+        {% else %}
+            {% include 'includes/_sidebar.html' %}
+        {% endif %}
+    </div>
+
+    <div class="col container text-white">
+        {% if products %}
+            {% for product in products %}
+            <div class="card mb-2 bg-dark bg-gradient">
+                <div class="card-header">
+                    <h5>{{ product['product_name'] }}</h5>
+                </div>
+                <div class="card-body pt-0 pb-0">
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text text-muted">Unit Price</p>
+                            <p>${{ product['product_price'] }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text text-muted">Quantity</p>
+                            <p>{{ product['quantity'] }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="card-text text-muted">Sub-Total</p>
+                            <p>${{ product['product_price'] * product['quantity'] }}</p>
+                        </div>
+                        <div class="col d-flex flex-row-reverse align-self-center gap-2">
+                            <a href="{{ url_for('shop.minus_quantity', product_id=product['product_id']) }}" class="btn btn-success">
+                                <img src="https://cdn-icons-png.flaticon.com/512/56/56889.png" style="max-width: 15px; padding-bottom: 2px;">
+                            </a>
+                            <a href="{{ url_for('shop.add_quantity', product_id=product['product_id']) }}" class="btn btn-success">
+                                <img src="https://cdn-icons-png.flaticon.com/512/32/32339.png" style="max-width: 15px; padding-bottom: 2px;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="text-white">
+            <h3 class="text-center font-weight-bold">No products have been added to cart</h3>
+        </div>
+        {% endif %}
+        <hr>
+        <h3 class="d-flex justify-content-end">Total: <span>${{ total }}0</span></h3>
+        <div class="d-flex justify-content-between mb-4">
+            <a href="/shopNow" class="btn btn-outline-info">Back to shopping</a>
+            <a href="/payment" class="btn btn-outline-info">Proceed to Payment</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}User Database{% endblock %}
+
+{% block content %}
+<h1 class="text-white">User List</h1>
+<ul>
+    <div class="text-white">
+        {% if count == 0 %}
+        <p>There are no users.</p>
+        {% else %}
+        <p>There are {{ count }} user.</p>
+        {% endif %}
+    </div>
+
+    <div class="w3-container">
+        <h3 class="text-white" style="display: inline-block;">Filter By:</h3>
+        <div class="w3-dropdown-hover" style="display: inline-block; margin-left: 10px;">
+            <button class="w3-button w3-black">
+            {% if role_filter == 'staff' %}
+                Staff
+            {% elif role_filter == 'customer' %}
+                Customer
+            {% else %}
+                All
+            {% endif %}
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey bg-dark" id="myDIV">
+                <a class="w3-bar-item w3-button" href="{{ url_for('auth.userdb', role='all') }}">All</a>
+                <a class="w3-bar-item w3-button" href="{{ url_for('auth.userdb', role='staff') }}" {% if role_filter=='staff' %}selected{% endif %}>Staff</a>
+                <a class="w3-bar-item w3-button" href="{{ url_for('auth.userdb', role='customer') }}" {% if role_filter=='customer' %}selected{% endif %}>Customer</a>
+            </div>
+        </div>
+        <p class="text-white">Mouse-over the dropdown and select the user type to filter by.</p>
+    </div>
+
+
+    <div>
+        <table class="table table-striped text-white">
+            <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Hashed Password</th>
+                <th>User Type</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in data %}
+            <tr>
+                <td class="text-white">{{ row.id }}</td>
+                <td class="text-white">{{ row.fname }} {{ row.lname }}</td>
+                <td class="text-white">{{ row.email }}</td>
+                <td class="text-white">{{ row.password }}</td>
+                <td class="text-white">{{ row.user_type }}</td>
+                <td>
+                    <form action="{{url_for('auth.update_user', id=row.id)}}" method="GET">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="submit" class="btn btn-light" value="Update">
+                    </form>
+                </td>
+                <td>
+                    <form action="{{url_for('auth.delete_user', id=row.id)}}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <!-- Button to Open the Modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#myModal_{{row.id}}">
+                            Delete
+                        </button>
+
+                        <!-- The Modal -->
+                        <div class="modal text-dark" id="myModal_{{row.id}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Are you sure you want to delete {{ row.fname }} {{ row.lname }}?
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</ul>
+{% endblock %}

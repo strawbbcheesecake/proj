@@ -1,0 +1,67 @@
+<div class="d-flex flex-column flex-shrink-0 flex-grow-0 p-3 text-white bg-dark sticky-top" style="width: 180px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">Menu</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/" class="nav-link text-white" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
+          Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/shopNow" class="nav-link text-white" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
+          Shop Now
+        </a>
+      </li>
+      <li>
+        <a href="/faq" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
+          FAQs
+        </a>
+      </li>
+      <li>
+        <a href="/cart" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
+          My Cart
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <ul class = "list-unstyled">
+        <li><h5>For Staff</h5>
+            <ul class = "list-unstyled">
+                <li class="nav-item dropdown hover-overlay shadow-1-strong">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Manage FAQs</a>
+                    <ul class="dropdown-menu bg-success">
+                        <li>
+                            <a class="dropdown-item bg-transparent text-white" href="/add-faq">
+                                Add FAQs
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item bg-transparent text-white" href="/faqDB">
+                                Retrieve FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown d-flex align-items-end flex-column">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://static.vecteezy.com/system/resources/previews/022/123/337/original/user-icon-profile-icon-account-icon-login-sign-line-vector.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong class="nav-link text-white">admin{{ session['fullname'] }}</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="/clear-cart">Clear Cart</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+      </ul>
+    </div>
+  </div>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <form class="text-white" method="POST" action="{{ url_for('auth.verify_otp') }}" id="verify-otp-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <h3 align="center">Verify OTP</h3>
+            <div id="otp-section">
+                <div class="form-group mb-3">
+                    <label for="otp">Enter OTP sent to your email</label>
+                    <input type="text" class="form-control" id="otp" name="otp">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="verify-button">Verify OTP</button>
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+{% endblock %}

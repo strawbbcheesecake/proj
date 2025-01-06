@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Request Password Reset{% endblock %}
+{% block content %}
+% from "includes/_formHelper.html" import render_field %}
+
+<div class="row">
+    <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Request Password Reset</h4>
+                <form method="POST" action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="security_answer" class="form-control-label">Security Answer:</label>
+                        {{ form.security_answer(class="form-control form-control-lg") }}
+                        {% if form.security_answer.errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.security_answer.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

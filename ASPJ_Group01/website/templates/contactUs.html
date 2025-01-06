@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="row text-white">
+    <div class = "col flex-grow-0">
+        {% if current_user.is_authenticated and current_user.user_type == 'staff' %}
+        {% include 'includes/_sidebarStaff.html' %}
+        {%else%}
+        {% include 'includes/_sidebar.html' %}
+        {% endif %}
+    </div>
+    <div class="col">
+        <h1>Contact Us</h1>
+        <hr style="color:white;">
+        <div class="row">
+            <p class="display-6">We would love to hear from you!</p>
+            <div class="col">
+                <form class="text-white w-100" method = "POST" action="">
+                    <div class="form-group mb-3">
+                        {{ render_field(form.feedback_name, class="form-control") }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ render_field(form.feedback_email, class="form-control") }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ render_field(form.feedback_text, class="form-control") }}
+                    </div>
+                    <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

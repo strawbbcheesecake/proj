@@ -1,0 +1,22 @@
+flask~=3.0.3
+Flask-Login
+Flask-SQLAlchemy
+passlib[argon2]
+Jinja2
+<<<<<<< Updated upstream
+WTForms
+flask-wtf
+flask-mail
+SQLAlchemy
+cryptography
+PyMySQL
+pyotp
+=======
+WTForms~=3.1.2
+SQLAlchemy
+cryptography~=43.0.0
+PyMySQL~=1.1.1
+bcrypt~=4.2.0
+itsdangerous~=2.2.0
+pyotp~=2.9.0
+>>>>>>> Stashed changes

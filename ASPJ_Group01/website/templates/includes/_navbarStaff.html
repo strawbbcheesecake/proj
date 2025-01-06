@@ -1,0 +1,42 @@
+<style>
+    .dropdown-item:focus, .dropdown-item:hover {
+        background-color: #146c43;
+    }
+</style>
+<nav class="navbar navbar-expand-lg bg-success">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white fs-1 fw-bold" href="/">GreenStyle</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav flex-grow-0 ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/"><i class = "fa fa-fw fa-home"></i>Home</a>
+                </li>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" href="#">
+                        Manage Product
+                    </a>
+                    <ul class="dropdown-menu bg-success">
+                        <li><a class="dropdown-item text-white" href="/add-product">Add Product</a></li>
+                        <li><a class="dropdown-item text-white" href="/retrieve-product">View Products</a></li>
+                    </ul>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/userdb">Manage Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/sign-up">Create Customer Accounts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/staff-sign-up">Create Staff Accounts</a>
+                </li>
+                <li class="nav-item d-inline">
+                    <a class="nav-link text-white" href="{{url_for('auth.logout')}}"><i class="fa fa-fw fa-user"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

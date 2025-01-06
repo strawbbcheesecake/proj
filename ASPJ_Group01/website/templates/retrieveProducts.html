@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}All Products{% endblock %}
+
+{% block content %}
+<div class="row text-white">
+    <h1 class="display-4">All Products</h1>
+    <hr style="color:white">
+    <div>
+        <table class="table table-striped text-white">
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="text-white">{{ product['product_id'] }}</td>
+                <td class="text-white">{{ product['product_name'] }}</td>
+                <td class="text-white">{{ product['product_cat'] }}</td>
+                <td class="text-white">{{ product['product_price'] }}</td>
+                <td><a href="{{ url_for('shop.edit_product', product_id=product['product_id']) }}"
+                       class="btn btn-warning">Update</a>
+                <td>
+                    <form action="{{ url_for('shop.delete_product', product_id=product['product_id']) }}"
+                          method="GET">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <a href="{{ url_for('shop.delete_product', product_id=product['product_id']) }}"
+                           class="btn btn-danger" data-bs-toggle="modal"
+                           data-bs-target="#myModal_{{ product['product_id'] }}">Delete</a>
+                        <div class="modal text-dark" id="myModal_{{ product['product_id'] }}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Are you sure you want to delete {{ product['product_name'] }}?
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}
